@@ -1,8 +1,25 @@
 package com.example.restendpoints.controller;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RestEndPoint {
+    @Value("${default.course.name}")
+    private String cName;
+
+    @Value("${default.chaptersCount}")
+    private int chaptersCount;
+
+    @RequestMapping("/defaultCourse")
+    public Course getDefaultCourse(@RequestParam(value = "name", defaultValue = "Spring Boot", required = false) String name,
+                               @RequestParam(value = "chapterCount", defaultValue = "2", required = false) int chapterCount){
+        return new Course(cName, chaptersCount);
+    }
+
+
+
+
+
     @RequestMapping("/course")
     public Course getEndPoints(@RequestParam(value = "name", defaultValue = "Spring Boot", required = false) String name,
         @RequestParam(value = "chapterCount", defaultValue = "2", required = false) int chapterCount){
