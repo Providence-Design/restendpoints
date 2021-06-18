@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("/course")
+@ConfigurationProperties("course")
 
 public class CourseConfiguration {
     private String name;
