@@ -1,14 +1,21 @@
 package com.example.restendpoints.controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 public class RestEndPoint {
+
     @Value("${default.course.name}")
     private String cName;
 
-    @Value("${default.chaptersCount}")
+    @Value("${default.course.chapterCount}")
     private int chaptersCount;
+
+    @Autowired
+    private CourseConfiguration courseConfiguration;
 
     @RequestMapping("/defaultCourse")
     public Course getDefaultCourse(@RequestParam(value = "name", defaultValue = "Spring Boot", required = false) String name,
@@ -16,9 +23,16 @@ public class RestEndPoint {
         return new Course(cName, chaptersCount);
     }
 
-
-
-
+    @RequestMapping("/gethierarchical")
+    public HashMap<String, Object> getConfigAnnotateProperties()
+    {
+        HashMap<String,Object> map=new HashMap<String, Object>();
+        map.put("name", courseConfiguration.getName());
+        map.put("chapterCount", courseConfiguration.getChapterCount());
+        map.put("rating", courseConfiguration.getRating());
+        map.put("author", courseConfiguration.getAuthor());
+        return map;
+    }
 
     @RequestMapping("/course")
     public Course getEndPoints(@RequestParam(value = "name", defaultValue = "Spring Boot", required = false) String name,
